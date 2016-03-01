@@ -1,16 +1,17 @@
-package persistence.entities.library;
+package persistence.library.entities;
 
-public class Theme {
-	
+public class Style {
 	private int id;
 	private String name;
+	private String description;
 	
-	public Theme(int id, String name) {
+	public Style(int id, String name, String description) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.description = description;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -27,10 +28,14 @@ public class Theme {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "Theme [id=" + id + ", name=" + name + "]";
+	public String getDescription() {
+		return description;
 	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -45,7 +50,12 @@ public class Theme {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Theme other = (Theme) obj;
+		Style other = (Style) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -55,7 +65,4 @@ public class Theme {
 			return false;
 		return true;
 	}
-	
-	
-
 }
