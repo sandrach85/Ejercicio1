@@ -1,14 +1,16 @@
-package persistence.library.entities;
+package persistence.myLibrary.entities;
 
-public class Theme {
-	
+public class Author {
+
 	private int id;
 	private String name;
+	private String surname;
 	
-	public Theme(int id, String name) {
+	public Author(int id, String name, String surname) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.surname = surname;
 	}
 
 	public int getId() {
@@ -27,9 +29,17 @@ public class Theme {
 		this.name = name;
 	}
 
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
 	@Override
 	public String toString() {
-		return "Theme [id=" + id + ", name=" + name + "]";
+		return "Author [id=" + id + ", name=" + name + ", surname=" + surname + "]";
 	}
 
 	@Override
@@ -45,7 +55,7 @@ public class Theme {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Theme other = (Theme) obj;
+		Author other = (Author) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -53,9 +63,13 @@ public class Theme {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (surname == null) {
+			if (other.surname != null)
+				return false;
+		} else if (!surname.equals(other.surname))
+			return false;
 		return true;
 	}
 	
 	
-
 }

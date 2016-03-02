@@ -1,4 +1,4 @@
-package persistence.library.entities;
+package persistence.myLibrary.entities;
 
 public class Contact {
 	private String email;

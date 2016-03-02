@@ -1,4 +1,4 @@
-package persistence.library.entities;
+package persistence.myLibrary.entities;
 
 public class Style {
 	private int id;
