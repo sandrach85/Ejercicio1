@@ -115,7 +115,7 @@ public class PruebaResourceFuncionalTesting {
     
     @Test
     public void testErrorOk() {
-        double response = new RestBuilder<Double>(URL_API).path(Uris.ADMINS).path(Uris.ERRORES).param("dividendo","6").param("divisor","3").get().build();
+        double response = new RestBuilder<Double>(URL_API).path(Uris.ADMINS).path(Uris.ERRORES).param("dividendo","6").param("divisor","3").clazz(Double.class).get().build();
        
         System.out.println("INFO >>>>> " + response);
     }
