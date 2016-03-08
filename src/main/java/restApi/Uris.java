@@ -35,5 +35,7 @@ public class Uris {
     public static final String FRACCION = "/fraccion";
     
     public static final String CALCULADORA3 = "/calculadora3";
+    
+    public static final String ERRORES = "/errores";
 
 }
