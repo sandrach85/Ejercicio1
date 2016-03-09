@@ -19,13 +19,14 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 
 import config.MailConfig;
 import config.PackageNames;
+import config.PersistenceConfig;
 import restApi.TimeBasedAccessInterceptor;
 import restApi.Uris;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {PackageNames.REST_API, PackageNames.WEB})
-@Import(value = {MailConfig.class})
+@ComponentScan(basePackages = {PackageNames.REST_API, PackageNames.WEB, PackageNames.DAOS})
+@Import(value = {MailConfig.class, PersistenceConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     // Se configuran los interceptores

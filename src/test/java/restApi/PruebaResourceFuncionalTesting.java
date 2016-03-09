@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import config.PersistenceConfig;
 import config.TestsApiConfig;
+import persistence.daos.UserDao;
+import persistence.entities.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestsApiConfig.class})
@@ -27,8 +31,6 @@ public class PruebaResourceFuncionalTesting {
 
     private static final String URL_API = "http://localhost:8080/Ejercicio1.0.0.1-SNAPSHOT"  + Uris.SERVLET_MAP;
 
-
-    
     @Test
     public void testEcho() {
         // Header
@@ -121,8 +123,22 @@ public class PruebaResourceFuncionalTesting {
     }
     
     @Test
-    public void testUserOK() {
+    public void testUserAnnotationOK() {
         String response = new RestBuilder<String>(URL_API).path(Uris.SECURITY).path(Uris.SECURITYANNOTATION).basicAuth("u1", "123456")
+                .clazz(String.class).get().build();
+        System.out.println("INFO >>>>> " + response);
+    }
+    
+    @Test
+    public void testUserUrisOK() {
+        String response = new RestBuilder<String>(URL_API).path(Uris.SECURITY).path(Uris.SECURITYURIS).basicAuth("u1", "123456")
+                .clazz(String.class).get().build();
+        System.out.println("INFO >>>>> " + response);
+    }
+    
+    @Test
+    public void testUserBDOK() {
+        String response = new RestBuilder<String>(URL_API).path(Uris.SECURITY).path(Uris.SECURITYURIS).basicAuth("u2", "123456")
                 .clazz(String.class).get().build();
         System.out.println("INFO >>>>> " + response);
     }

@@ -26,9 +26,14 @@ public class SecurityResource {
         return "OK. Acceso permitido al recurso admin";
     }
     
+	@RequestMapping(value = Uris.SECURITYURIS, method = RequestMethod.GET)
+	public boolean securityUris() {
+		return true;
+	}
+	
 	@RequestMapping(value = Uris.SECURITYANNOTATION, method = RequestMethod.GET)
+	@PreAuthorize("hasRole('PLAYER')")
 	public boolean securityAnnotationMethod() {
 		return true;
 	}
- 
 }

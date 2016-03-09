@@ -54,4 +54,6 @@ public class PruebaResource {
 		}
 		return param1 / param2;
 	}
+	
+
 }

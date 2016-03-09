@@ -3,8 +3,10 @@ package restApi;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,10 +16,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import persistence.daos.UserDao;
+
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+	@Autowired
+	private UserDao userDao;
+	
+	@PostConstruct
+	public void poblate(){
+		userDao.save(new persistence.entities.User("u2", "PLAYER"));
+	}
+	
+	
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		if ("user".equals(username)) {
@@ -28,7 +41,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			return this.userBuilder(username, "123456", "MANAGER");
 		} else if ("admin".equals(username)) {
 			return this.userBuilder(username, "123456", "USER", "MANAGER", "ADMIN");
-		} else {
+		} else if(userDao.findByName(username).getName()!=null){
+			return this.userBuilder(username, "123456",userDao.findByName(username).getRol());
+		}else{
 			throw new UsernameNotFoundException("Usuario no encontrado");
 		}
 	}
