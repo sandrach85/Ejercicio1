@@ -119,5 +119,12 @@ public class PruebaResourceFuncionalTesting {
        
         System.out.println("INFO >>>>> " + response);
     }
+    
+    @Test
+    public void testUserOK() {
+        String response = new RestBuilder<String>(URL_API).path(Uris.SECURITY).path(Uris.SECURITYANNOTATION).basicAuth("u1", "123456")
+                .clazz(String.class).get().build();
+        System.out.println("INFO >>>>> " + response);
+    }
 
 }

@@ -4,10 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -21,13 +24,15 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import config.TestsApiConfig;
+import restApi.Gender;
 import restApi.Uris;
+import restApi.Wrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestsApiConfig.class})
 public class AdminResourceFunctionalTesting {
 
-    private static final String URL_API = "http://localhost:8080/Ejercicio1.0.0.1-SNAPSHOT" + Uris.SERVLET_MAP;
+    private static final String URL_API = "http://localhost:8080/JEE.Spring.0.0.1-SNAPSHOT" + Uris.SERVLET_MAP;
 
     @Test
     public void testState() {
@@ -75,7 +80,29 @@ public class AdminResourceFunctionalTesting {
         Wrapper response = new RestTemplate().exchange(requestEntity, Wrapper.class).getBody();
         System.out.println(response);
     }
-    
+
+    @Test
+    public void testBodyStringList() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(URL_API).path(Uris.ADMINS).path(Uris.BODY).path(Uris.STRING_LIST).build().encode()
+                .toUri();
+        String json = new RestTemplate().exchange(uri, HttpMethod.GET, new HttpEntity<Object>(new HttpHeaders()), String.class).getBody();
+        System.out.println(json);
+        List<String> response = Arrays.asList(new RestTemplate().exchange(uri, HttpMethod.GET, new HttpEntity<Object>(new HttpHeaders()),
+                String[].class).getBody());
+        System.out.println(response);
+    }
+
+    @Test
+    public void testBodyWrapperList() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(URL_API).path(Uris.ADMINS).path(Uris.BODY).path(Uris.WRAPPER_LIST).build().encode()
+                .toUri();
+        String json = new RestTemplate().exchange(uri, HttpMethod.GET, new HttpEntity<Object>(new HttpHeaders()), String.class).getBody();
+        System.out.println(json);
+        List<Wrapper> response = Arrays.asList(new RestTemplate().exchange(uri, HttpMethod.GET, new HttpEntity<Object>(new HttpHeaders()),
+                Wrapper[].class).getBody());
+        System.out.println(response);
+    }
+
     @Test
     public void testErrorNotToken() {
         try {
@@ -163,5 +190,4 @@ public class AdminResourceFunctionalTesting {
             System.out.println("ERROR >>>>> " + httpError.getResponseBodyAsString());
         }
     }
- 
 }

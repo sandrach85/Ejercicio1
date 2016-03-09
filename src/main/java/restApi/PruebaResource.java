@@ -37,7 +37,8 @@ public class PruebaResource {
 		}
 		return resul;
 	}
- 
+	
+
 	@RequestMapping(value = Uris.ERRORES, method = RequestMethod.GET)
 	public double error(@RequestParam(value = "dividendo", required = true) int param1,
 			@RequestParam(value = "divisor", required = true) int param2)

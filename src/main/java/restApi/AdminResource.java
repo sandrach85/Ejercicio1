@@ -1,6 +1,8 @@
 package restApi;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import restApi.exceptions.MalformedHeaderException;
-import restApi.exceptions.NotFoundUserIdException;
 import restApi.exceptions.UnauthorizedException;
+import restApi.exceptions.NotFoundUserIdException;
 
 @RestController
 @RequestMapping(Uris.SERVLET_MAP + Uris.ADMINS)
@@ -35,7 +37,20 @@ public class AdminResource {
     public Wrapper body(@RequestBody Wrapper wrapper) {
         return wrapper;
     }
-    
+
+    @RequestMapping(value = Uris.BODY + Uris.STRING_LIST, method = RequestMethod.GET)
+    public List<String> bodyStringList() {
+        return Arrays.asList("uno", "dos", "tres");
+    }
+
+    @RequestMapping(value = Uris.BODY + Uris.WRAPPER_LIST, method = RequestMethod.GET)
+    public List<Wrapper> bodyWrapperList() {
+        Wrapper wrapper1 = new Wrapper(666, "daemon", Gender.FEMALE, new GregorianCalendar(1979, 07, 22));
+        Wrapper wrapper2 = new Wrapper(999, "last", Gender.MALE, new GregorianCalendar(1979, 07, 22));
+        Wrapper wrapper3 = new Wrapper(000, "first", Gender.FEMALE, new GregorianCalendar(1979, 07, 22));
+        return Arrays.asList(wrapper1, wrapper2, wrapper3);
+    }
+
     @RequestMapping(value = Uris.ERROR + Uris.ID, method = RequestMethod.GET)
     public Wrapper error(@RequestHeader(value = "token") String token, @PathVariable(value = "id") int id) throws NotFoundUserIdException,
             UnauthorizedException, MalformedHeaderException {
@@ -56,5 +71,5 @@ public class AdminResource {
     public String securityAnnotation(){
         return "{\"response\":\"Security\"}";
     }
- 
+
 }
