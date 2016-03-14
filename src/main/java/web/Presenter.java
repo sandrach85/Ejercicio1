@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.ServletContext;
+/*
+import javax.servlet.ServletContext;*/
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -32,8 +32,8 @@ public class Presenter {
 
     private static final List<String> THEMES = Arrays.asList("jsp", "bootstrap", "thymeleaf");
 
-    @Autowired
-    private ServletContext servletContext;
+/*    @Autowired
+    private ServletContext servletContext;*/
 
     @Autowired
     private UserService userService;
